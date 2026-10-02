@@ -1,132 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>SVSC Credit Mapping</title>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+    }
+
+    :root {
+      --navy: #10243e;
+      --navy-light: #183454;
+      --blue: #2563eb;
+      --blue-light: #eff6ff;
+      --green: #16805c;
+      --green-light: #ecfdf5;
+      --orange: #c76b00;
+      --orange-light: #fff7ed;
+      --red: #c0392b;
+      --red-light: #fef2f2;
+      --text: #172033;
+      --muted: #687386;
+      --border: #e5e9ef;
+      --background: #f7f9fc;
+      --white: #ffffff;
     }
 
     body {
-      font-family: Arial, sans-serif;
-      background: #f6f8fb;
-      color: #172033;
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Arial,
+        sans-serif;
     }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 40px 32px 70px;
+    }
+
+    /* =========================
+       HEADER
+    ========================= */
 
     .header {
-      background: #ffffff;
-      border-bottom: 1px solid #e5e9f0;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .brand {
-      font-size: 20px;
-      font-weight: 700;
-    }
-
-    .badge {
-      background: #eef4ff;
-      color: #2457d6;
-      padding: 7px 12px;
-      border-radius: 20px;
-      font-size: 13px;
-    }
-
-    .layout {
-      display: flex;
-      min-height: calc(100vh - 73px);
-    }
-
-    .sidebar {
-      width: 230px;
-      background: #ffffff;
-      border-right: 1px solid #e5e9f0;
-      padding: 25px 15px;
-    }
-
-    .nav-item {
-      padding: 12px 14px;
-      margin-bottom: 6px;
-      border-radius: 8px;
-      cursor: pointer;
-      color: #596579;
-    }
-
-    .nav-item.active {
-      background: #eef4ff;
-      color: #2457d6;
-      font-weight: 600;
-    }
-
-    .main {
-      flex: 1;
-      padding: 35px;
-      max-width: 1300px;
-    }
-
-    .page-title {
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
-
-    .page-description {
-      color: #667085;
       margin-bottom: 28px;
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 18px;
-      margin-bottom: 30px;
-    }
-
-    .card {
-      background: white;
-      border: 1px solid #e5e9f0;
-      border-radius: 12px;
-      padding: 22px;
-    }
-
-    .card-label {
-      color: #667085;
+    .eyebrow {
+      color: var(--blue);
       font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       margin-bottom: 8px;
     }
 
-    .card-value {
-      font-size: 25px;
-      font-weight: 700;
+    .header h1 {
+      margin: 0;
+      font-size: 34px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
     }
 
-    .section {
-      background: white;
-      border: 1px solid #e5e9f0;
-      border-radius: 12px;
-      overflow: hidden;
+    .header p {
+      margin: 12px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
     }
 
-    .section-header {
-      padding: 20px;
-      border-bottom: 1px solid #e5e9f0;
+    .prototype-note {
+      margin-top: 18px;
+      padding: 13px 16px;
+      border: 1px solid #dbe7f7;
+      background: #f5f9ff;
+      border-radius: 10px;
+      color: #35516f;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .prototype-note strong {
+      color: var(--navy);
+    }
+
+    /* =========================
+       SUMMARY AREA
+    ========================= */
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 260px;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .summary-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      min-height: 126px;
+    }
+
+    .summary-label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .summary-value {
+      font-size: 30px;
+      font-weight: 750;
+      letter-spacing: -0.03em;
+    }
+
+    .summary-subtext {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .summary-card.selected .summary-value {
+      color: var(--blue);
+    }
+
+    .summary-card.remaining .summary-value {
+      color: var(--green);
+    }
+
+    .summary-card.remaining.low .summary-value {
+      color: var(--orange);
+    }
+
+    .summary-card.remaining.empty .summary-value {
+      color: var(--red);
+    }
+
+    /* =========================
+       CHART
+    ========================= */
+
+    .chart-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: center;
+      min-height: 126px;
     }
 
-    .search {
-      padding: 10px 14px;
-      border: 1px solid #d7dce5;
-      border-radius: 7px;
-      width: 250px;
+    .chart-wrapper {
+      width: 92px;
+      height: 92px;
+      position: relative;
+    }
+
+    .chart-wrapper canvas {
+      width: 92px !important;
+      height: 92px !important;
+    }
+
+    .chart-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .chart-center strong {
+      font-size: 15px;
+      line-height: 1;
+    }
+
+    .chart-center span {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 9px;
+    }
+
+    /* =========================
+       CONTROLS
+    ========================= */
+
+    .catalogue-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 14px;
+    }
+
+    .catalogue-title h2 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .catalogue-title p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .search-box {
+      width: 310px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 42px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      border-radius: 9px;
+      padding: 0 14px;
+      outline: none;
+      color: var(--text);
+    }
+
+    .search-box input:focus {
+      border-color: #9bbcf5;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+    }
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .table-container {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
     }
 
     table {
@@ -134,52 +266,436 @@
       border-collapse: collapse;
     }
 
-    th,
-    td {
-      padding: 15px 18px;
-      text-align: left;
-      border-bottom: 1px solid #edf0f4;
-      font-size: 14px;
+    thead {
+      background: #f8fafc;
     }
 
     th {
-      background: #fafbfc;
-      color: #596579;
-      font-weight: 600;
+      text-align: left;
+      padding: 14px 18px;
+      color: #647084;
+      font-size: 11px;
+      font-weight: 750;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border);
     }
 
-    .empty {
-      padding: 55px 20px;
+    td {
+      padding: 17px 18px;
+      border-bottom: 1px solid #edf0f4;
+      vertical-align: middle;
+      font-size: 13px;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr.service-row {
+      transition: background 0.15s ease;
+    }
+
+    tbody tr.service-row:hover {
+      background: #fafcff;
+    }
+
+    tbody tr.service-row.selected {
+      background: #f5f9ff;
+    }
+
+    .category-row td {
+      padding: 11px 18px;
+      background: #f1f5f9;
+      color: var(--navy);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .service-name {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    .service-description {
+      max-width: 620px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .credit-value {
+      font-weight: 800;
+      white-space: nowrap;
+      color: var(--navy);
+    }
+
+    .credit-label {
+      color: var(--muted);
+      font-size: 11px;
+      margin-left: 3px;
+    }
+
+    .action-cell {
+      width: 115px;
+      text-align: right;
+    }
+
+    .add-button {
+      border: 1px solid #cbd5e1;
+      background: var(--white);
+      color: var(--navy);
+      border-radius: 8px;
+      padding: 8px 13px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .add-button:hover:not(:disabled) {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: var(--blue-light);
+    }
+
+    .add-button.added {
+      border-color: #b8e1d0;
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .add-button.not-enough {
+      border-color: #f0c8c4;
+      background: var(--red-light);
+      color: var(--red);
+      cursor: not-allowed;
+    }
+
+    .add-button:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    /* =========================
+       EMPTY SEARCH STATE
+    ========================= */
+
+    .empty-state {
+      display: none;
+      padding: 50px 20px;
       text-align: center;
-      color: #667085;
+      color: var(--muted);
     }
 
-    .empty strong {
+    .empty-state strong {
       display: block;
-      color: #172033;
-      margin-bottom: 8px;
+      color: var(--text);
+      margin-bottom: 5px;
+    }
+
+    /* =========================
+       FOOTER ACTION
+    ========================= */
+
+    .allocation-footer {
+      margin-top: 24px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .allocation-footer h3 {
+      margin: 0 0 5px;
       font-size: 16px;
     }
 
-    @media (max-width: 800px) {
-      .sidebar {
+    .allocation-footer p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .submit-button {
+      border: none;
+      background: var(--navy);
+      color: white;
+      border-radius: 9px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-weight: 750;
+      font-size: 13px;
+      transition: background 0.15s ease;
+      white-space: nowrap;
+    }
+
+    .submit-button:hover {
+      background: var(--navy-light);
+    }
+
+    /* =========================
+       TOAST
+    ========================= */
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      max-width: 380px;
+      background: var(--navy);
+      color: white;
+      padding: 14px 17px;
+      border-radius: 10px;
+      box-shadow: 0 12px 35px rgba(16, 36, 62, 0.2);
+      font-size: 13px;
+      line-height: 1.45;
+      transform: translateY(120px);
+      opacity: 0;
+      transition: all 0.25s ease;
+      z-index: 1000;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .toast.warning {
+      background: #8a4b08;
+    }
+
+    .toast.success {
+      background: var(--green);
+    }
+
+    /* =========================
+       MODAL
+    ========================= */
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.48);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 2000;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+    }
+
+    .modal {
+      width: 100%;
+      max-width: 440px;
+      background: white;
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(15, 23, 42, 0.22);
+    }
+
+    .modal-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--green-light);
+      color: var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 16px;
+    }
+
+    .modal h3 {
+      margin: 0 0 8px;
+      font-size: 20px;
+    }
+
+    .modal p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 13px;
+    }
+
+    .modal-summary {
+      margin: 18px 0;
+      padding: 14px;
+      border-radius: 9px;
+      background: #f8fafc;
+      font-size: 13px;
+    }
+
+    .modal-close {
+      width: 100%;
+      border: none;
+      background: var(--navy);
+      color: white;
+      padding: 11px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    /* =========================
+       RESPONSIVE
+    ========================= */
+
+    @media (max-width: 1000px) {
+      .summary-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .chart-card {
+        grid-column: span 2;
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      .page {
+        padding: 20px 14px 40px;
+      }
+    
+      .header {
+        margin-bottom: 16px;
+      }
+    
+      .header h1 {
+        font-size: 26px;
+        line-height: 1.15;
+      }
+    
+      .header p {
+        font-size: 14px;
+        line-height: 1.5;
+      }
+    
+      .summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        padding: 8px 0;
+        background: var(--background);
+      }
+    
+      .summary-card {
+        padding: 12px 8px;
+        min-height: 90px;
+      }
+    
+      .summary-card .summary-value {
+        font-size: 22px;
+      }
+    
+      .summary-card .summary-label {
+        font-size: 11px;
+      }
+    
+      .summary-card p {
+        font-size: 10px;
+        line-height: 1.3;
+      }
+    
+      .chart-card {
+        grid-column: span 3;
+        min-height: 130px;
+        padding: 12px;
+      }
+    
+      .chart-card canvas {
+        max-height: 105px;
+      }
+    
+      .catalogue-header {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 14px;
+      }
+    
+      .search-box {
+        width: 100%;
+      }
+    
+      .table-container {
+        overflow-x: visible;
+      }
+    
+      table {
+        width: 100%;
+        min-width: 0;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+    
+      table thead {
         display: none;
       }
-
-      .main {
-        padding: 20px;
+    
+      table tbody {
+        display: block;
+        width: 100%;
       }
-
-      .cards {
-        grid-template-columns: 1fr;
+    
+      table tbody tr {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 10px 12px;
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 14px;
+        border: 1px solid #e5eaf0;
+        border-radius: 12px;
+        background: #ffffff;
       }
-
-      .header {
-        padding: 18px 20px;
+    
+      table tbody td {
+        padding: 0 !important;
+        border: 0 !important;
+        width: auto !important;
+        vertical-align: middle;
       }
-
-      .search {
-        width: 180px;
+    
+      table tbody td:first-child {
+        grid-column: 1 / -1;
+      }
+    
+      table tbody td:nth-child(2) {
+        grid-column: 1;
+      }
+    
+      table tbody td:last-child {
+        grid-column: 2;
+        align-self: center;
+        justify-self: end;
+      }
+    
+      .allocation-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 14px;
+      }
+    
+      .submit-button {
+        width: 100%;
+        min-height: 50px;
       }
     }
   </style>
@@ -187,90 +703,1270 @@
 
 <body>
 
-  <header class="header">
-    <div class="brand">SVSC Credit Mapping</div>
-    <div class="badge">Prototype</div>
-  </header>
+  <main class="page">
 
-  <div class="layout">
+    <!-- =========================
+         HEADER
+    ========================== -->
 
-    <aside class="sidebar">
-      <div class="nav-item active">Credit Catalogue</div>
-      <div class="nav-item">Package Builder</div>
-      <div class="nav-item">Credit Top-ups</div>
-    </aside>
+    <header class="header">
 
-    <main class="main">
+      <div class="eyebrow">
+        Scalable Venture Studio & Capital
+      </div>
 
-      <h1 class="page-title">Credit Catalogue</h1>
+      <h1>
+        Credit Mapping
+      </h1>
 
-      <p class="page-description">
-        A structured view of SVSC services, credit allocation, scope and delivery requirements.
+      <p>
+        Explore the support available across the venture studio and allocate
+        your credits to the services that are most relevant to your business.
       </p>
 
-      <div class="cards">
+      
 
-        <div class="card">
-          <div class="card-label">Catalogue Items</div>
-          <div class="card-value">—</div>
+    </header>
+
+
+    <!-- =========================
+         SUMMARY
+    ========================== -->
+
+    <section class="summary-grid">
+
+      <div class="summary-card">
+
+        <div class="summary-label">
+          Total Credits
         </div>
 
-        <div class="card">
-          <div class="card-label">Credit Range</div>
-          <div class="card-value">—</div>
+        <div class="summary-value" id="totalCredits">
+          1,000
         </div>
 
-        <div class="card">
-          <div class="card-label">Last Updated</div>
-          <div class="card-value">—</div>
+        <div class="summary-subtext">
+          Available credits
         </div>
 
       </div>
 
-      <section class="section">
 
-        <div class="section-header">
-          <strong>Service Catalogue</strong>
+      <div class="summary-card selected">
 
-          <input
-            class="search"
-            type="search"
-            placeholder="Search catalogue..."
-          >
+        <div class="summary-label">
+          Selected Credits
         </div>
 
-        <table>
+        <div class="summary-value" id="selectedCredits">
+          0
+        </div>
 
-          <thead>
-            <tr>
-              <th>Line Item</th>
-              <th>Credit Allocation</th>
-              <th>Description</th>
-              <th>Use Case</th>
-              <th>Frequency</th>
-              <th>Difficulty</th>
-              <th>Dependency</th>
-            </tr>
-          </thead>
+        <div class="summary-subtext">
+          Credits currently allocated
+        </div>
 
-          <tbody id="catalogue">
-            <tr>
-              <td colspan="7">
-                <div class="empty">
-                  <strong>Catalogue not populated yet</strong>
-                  The catalogue structure is ready. Service and credit data will be connected next.
-                </div>
-              </td>
-            </tr>
-          </tbody>
+      </div>
 
-        </table>
 
-      </section>
+      <div class="summary-card remaining" id="remainingCard">
 
-    </main>
+        <div class="summary-label">
+          Remaining Credits
+        </div>
+
+        <div class="summary-value" id="remainingCredits">
+          1,000
+        </div>
+
+        <div class="summary-subtext">
+          Credits still available
+        </div>
+
+      </div>
+
+
+      <div class="chart-card">
+
+        <div class="chart-wrapper">
+
+          <canvas id="creditChart"></canvas>
+
+          <div class="chart-center">
+
+            <strong id="chartPercentage">
+              0%
+            </strong>
+
+            <span>
+              allocated
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATALOGUE HEADER
+    ========================== -->
+
+    <section class="catalogue-header">
+
+      <div class="catalogue-title">
+
+        <h2>
+          Service Catalogue
+        </h2>
+
+        <p>
+          Select the services you want to include in your allocation.
+        </p>
+
+      </div>
+
+      <div class="search-box">
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search services..."
+          autocomplete="off"
+        />
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATALOGUE
+    ========================== -->
+
+    <section class="table-container">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Service
+            </th>
+
+            <th style="width: 160px;">
+              Credit Allocation
+            </th>
+
+            <th style="width: 120px; text-align: right;">
+              Action
+            </th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="serviceTableBody">
+          <!-- JavaScript renders services here -->
+        </tbody>
+
+      </table>
+
+      <div class="empty-state" id="emptyState">
+
+        <strong>
+          No services found
+        </strong>
+
+        Try searching for another service.
+
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         SUBMIT
+    ========================== -->
+
+    <section class="allocation-footer">
+
+      <div>
+
+        <h3>
+          Ready to submit your allocation?
+        </h3>
+
+        <p>
+          This prototype will capture the allocation for demonstration purposes only.
+        </p>
+
+      </div>
+
+      <button
+        class="submit-button"
+        id="submitButton"
+      >
+        Submit Allocation
+      </button>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       TOAST
+  ========================== -->
+
+  <div
+    class="toast"
+    id="toast"
+  ></div>
+
+
+  <!-- =========================
+       MODAL
+  ========================== -->
+
+  <div
+    class="modal-overlay"
+    id="modalOverlay"
+  >
+
+    <div class="modal">
+
+      <div class="modal-icon">
+        ✓
+      </div>
+
+      <h3>
+        Allocation Captured
+      </h3>
+
+      <p>
+        Your selected services have been captured for this prototype.
+        No real service request or credit transaction has been created.
+      </p>
+
+      <div class="modal-summary">
+
+        <strong id="modalSelected">
+          0 credits
+        </strong>
+
+        selected from your
+        <strong>
+          1,000 credit
+        </strong>
+        allocation.
+
+      </div>
+
+      <button
+        class="modal-close"
+        id="modalClose"
+      >
+        Close
+      </button>
+
+    </div>
 
   </div>
+
+
+  <script>
+
+    /*
+    ============================================================
+    SVSC CREDIT MAPPING
+    ============================================================
+
+    IMPORTANT:
+
+    This is the single source of truth for the prototype.
+
+    If your boss changes a credit value later, change the
+    "credits" number here.
+
+    Example:
+
+    { name: "Discovery Workshop", credits: 150 }
+
+    becomes:
+
+    { name: "Discovery Workshop", credits: 200 }
+
+    The catalogue, selected total, remaining credits and chart
+    will automatically update.
+
+    These values are illustrative prototype values.
+    ============================================================
+    */
+
+
+    const TOTAL_CREDITS = 1000;
+
+
+    const services = [
+
+      // =========================
+      // DISCOVERY & VALIDATION
+      // =========================
+
+      {
+        name: "Discovery Workshop",
+        credits: 150,
+        description:
+          "A focused session to understand the founder's idea, context and direction.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "Discovery Sprint",
+        credits: 250,
+        description:
+          "A focused engagement to turn a raw idea into a clearer plan.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "Customer Problem Assessment",
+        credits: 125,
+        description:
+          "Checks whether the problem is real and worth solving.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "Business Idea Validation",
+        credits: 150,
+        description:
+          "Checks whether the business idea has a real opportunity to pursue.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "Market Validation",
+        credits: 175,
+        description:
+          "Checks whether enough people would want the proposed product or service.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "Customer Validation",
+        credits: 175,
+        description:
+          "Confirms whether real customers would pay for the proposed solution.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "Product Assumption Review",
+        credits: 100,
+        description:
+          "Tests assumptions that could make or break the product idea.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "Concept Testing",
+        credits: 125,
+        description:
+          "Tests the concept with real people and gathers their response.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "Solution Validation",
+        credits: 175,
+        description:
+          "Checks whether the proposed solution actually addresses the problem.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "Pain Point Mapping",
+        credits: 100,
+        description:
+          "Maps the frustrations and pain points customers currently experience.",
+        category: "Discovery & Validation"
+      },
+
+      {
+        name: "User Interview Execution",
+        credits: 100,
+        description:
+          "Talks to real users and captures structured customer feedback.",
+        category: "Discovery & Validation"
+      },
+
+
+      // =========================
+      // PRODUCT STRATEGY
+      // =========================
+
+      {
+        name: "Persona Development",
+        credits: 100,
+        description:
+          "Defines the key customer types the product needs to serve.",
+        category: "Product Strategy"
+      },
+
+      {
+        name: "Customer Journey Mapping",
+        credits: 125,
+        description:
+          "Maps the major steps a customer takes through the product experience.",
+        category: "Product Strategy"
+      },
+
+      {
+        name: "Product Vision Workshop",
+        credits: 175,
+        description:
+          "Defines the product direction and what the product should become.",
+        category: "Product Strategy"
+      },
+
+      {
+        name: "Vision Statement Definition",
+        credits: 75,
+        description:
+          "Creates a clear statement describing what the business wants to achieve.",
+        category: "Product Strategy"
+      },
+
+      {
+        name: "Ambition Statement Definition",
+        credits: 75,
+        description:
+          "Defines a clear statement describing where the business wants to go.",
+        category: "Product Strategy"
+      },
+
+
+      // =========================
+      // ENGINEERING & TECHNOLOGY
+      // =========================
+
+      {
+        name: "Technical Feasibility Assessment",
+        credits: 150,
+        description:
+          "Checks whether an idea can actually be built with the required technology.",
+        category: "Engineering & Technology"
+      },
+
+      {
+        name: "Technical Architecture Design",
+        credits: 300,
+        description:
+          "Plans the overall technical structure of the product.",
+        category: "Engineering & Technology"
+      },
+
+      {
+        name: "Solution Architecture",
+        credits: 250,
+        description:
+          "Designs how the technical pieces fit together.",
+        category: "Engineering & Technology"
+      },
+
+      {
+        name: "API Development",
+        credits: 250,
+        description:
+          "Builds the connections between systems.",
+        category: "Engineering & Technology"
+      },
+
+      {
+        name: "Backend Development",
+        credits: 300,
+        description:
+          "Builds the server-side systems that power the product.",
+        category: "Engineering & Technology"
+      },
+
+      {
+        name: "Frontend Development",
+        credits: 300,
+        description:
+          "Builds the product interface users interact with.",
+        category: "Engineering & Technology"
+      },
+
+      {
+        name: "MVP Development",
+        credits: 400,
+        description:
+          "Builds the first working version of the product.",
+        category: "Engineering & Technology"
+      },
+
+
+      // =========================
+      // MARKETING & GROWTH
+      // =========================
+
+      {
+        name: "Brand Strategy Development",
+        credits: 175,
+        description:
+          "Plans how the brand should look, sound and feel.",
+        category: "Marketing & Growth"
+      },
+
+      {
+        name: "Brand Identity Development",
+        credits: 150,
+        description:
+          "Develops the visual identity and expression of the brand.",
+        category: "Marketing & Growth"
+      },
+
+      {
+        name: "Content Strategy Development",
+        credits: 150,
+        description:
+          "Plans what content should be created, why and when.",
+        category: "Marketing & Growth"
+      },
+
+      {
+        name: "SEO Audit",
+        credits: 100,
+        description:
+          "Checks how well a website performs in search results.",
+        category: "Marketing & Growth"
+      },
+
+
+      // =========================
+      // LEGAL & COMPLIANCE
+      // =========================
+
+      {
+        name: "Contract Drafting",
+        credits: 150,
+        description:
+          "Creates or drafts a contract for a business relationship.",
+        category: "Legal & Compliance"
+      },
+
+
+      // =========================
+      // FINANCE & ACCOUNTING
+      // =========================
+
+      {
+        name: "Financial Model Development",
+        credits: 250,
+        description:
+          "Builds a financial model to understand the business's future finances.",
+        category: "Finance & Accounting"
+      },
+
+
+      // =========================
+      // HUMAN RESOURCES & TALENT
+      // =========================
+
+      {
+        name: "Candidate Screening",
+        credits: 100,
+        description:
+          "Reviews candidates against the requirements for a role.",
+        category: "Human Resources & Talent"
+      }
+
+    ];
+
+
+    /*
+    ============================================================
+    STATE
+    ============================================================
+    */
+
+    let selectedServices = new Set();
+
+
+    /*
+    ============================================================
+    DOM ELEMENTS
+    ============================================================
+    */
+
+    const tableBody =
+      document.getElementById("serviceTableBody");
+
+    const searchInput =
+      document.getElementById("searchInput");
+
+    const emptyState =
+      document.getElementById("emptyState");
+
+    const selectedCreditsElement =
+      document.getElementById("selectedCredits");
+
+    const remainingCreditsElement =
+      document.getElementById("remainingCredits");
+
+    const remainingCard =
+      document.getElementById("remainingCard");
+
+    const chartPercentage =
+      document.getElementById("chartPercentage");
+
+    const submitButton =
+      document.getElementById("submitButton");
+
+    const toast =
+      document.getElementById("toast");
+
+    const modalOverlay =
+      document.getElementById("modalOverlay");
+
+    const modalClose =
+      document.getElementById("modalClose");
+
+    const modalSelected =
+      document.getElementById("modalSelected");
+
+
+    /*
+    ============================================================
+    HELPERS
+    ============================================================
+    */
+
+    function formatNumber(number) {
+      return new Intl.NumberFormat("en-US").format(number);
+    }
+
+
+    function getSelectedCredits() {
+
+      return services
+        .filter(service =>
+          selectedServices.has(service.name)
+        )
+        .reduce(
+          (total, service) =>
+            total + service.credits,
+          0
+        );
+
+    }
+
+
+    function getRemainingCredits() {
+
+      return TOTAL_CREDITS - getSelectedCredits();
+
+    }
+
+
+    /*
+    ============================================================
+    CHART
+    ============================================================
+    */
+
+    const chart = new Chart(
+      document.getElementById("creditChart"),
+      {
+        type: "doughnut",
+
+        data: {
+          labels: [
+            "Selected",
+            "Remaining"
+          ],
+
+          datasets: [
+            {
+              data: [
+                0,
+                TOTAL_CREDITS
+              ],
+
+              backgroundColor: [
+                "#2563eb",
+                "#e7edf5"
+              ],
+
+              borderWidth: 0
+            }
+          ]
+        },
+
+        options: {
+          responsive: true,
+
+          maintainAspectRatio: false,
+
+          cutout: "73%",
+
+          plugins: {
+            legend: {
+              display: false
+            },
+
+            tooltip: {
+              enabled: false
+            }
+          }
+        }
+      }
+    );
+
+
+    /*
+    ============================================================
+    UPDATE SUMMARY
+    ============================================================
+    */
+
+    function updateSummary() {
+
+      const selected =
+        getSelectedCredits();
+
+      const remaining =
+        getRemainingCredits();
+
+      const percentage =
+        (selected / TOTAL_CREDITS) * 100;
+
+
+      selectedCreditsElement.textContent =
+        formatNumber(selected);
+
+      remainingCreditsElement.textContent =
+        formatNumber(Math.max(remaining, 0));
+
+      chartPercentage.textContent =
+        `${percentage.toFixed(0)}%`;
+
+
+      chart.data.datasets[0].data = [
+        selected,
+        Math.max(remaining, 0)
+      ];
+
+      chart.update();
+
+
+      remainingCard.classList.remove(
+        "low",
+        "empty"
+      );
+
+
+      if (remaining <= 200 && remaining > 0) {
+        remainingCard.classList.add("low");
+      }
+
+
+      if (remaining === 0) {
+        remainingCard.classList.add("empty");
+      }
+
+
+      updateButtons();
+    }
+
+
+    /*
+    ============================================================
+    RENDER CATALOGUE
+    ============================================================
+    */
+
+    function renderServices(searchTerm = "") {
+
+      const search =
+        searchTerm.trim().toLowerCase();
+
+
+      tableBody.innerHTML = "";
+
+
+      let visibleCount = 0;
+
+      let currentCategory = "";
+
+
+      services.forEach((service, index) => {
+
+        const matches =
+          service.name.toLowerCase().includes(search) ||
+          service.description.toLowerCase().includes(search) ||
+          service.category.toLowerCase().includes(search);
+
+
+        if (!matches) {
+          return;
+        }
+
+
+        visibleCount++;
+
+
+        if (service.category !== currentCategory) {
+
+          currentCategory =
+            service.category;
+
+
+          const categoryRow =
+            document.createElement("tr");
+
+          categoryRow.className =
+            "category-row";
+
+          categoryRow.innerHTML = `
+            <td colspan="3">
+              ${service.category}
+            </td>
+          `;
+
+          tableBody.appendChild(
+            categoryRow
+          );
+        }
+
+
+        const row =
+          document.createElement("tr");
+
+        row.className =
+          "service-row";
+
+
+        if (
+          selectedServices.has(
+            service.name
+          )
+        ) {
+          row.classList.add("selected");
+        }
+
+
+        row.dataset.serviceName =
+          service.name;
+
+
+        row.innerHTML = `
+
+          <td>
+
+            <div class="service-name">
+              ${service.name}
+            </div>
+
+            <div class="service-description">
+              ${service.description}
+            </div>
+
+          </td>
+
+
+          <td>
+
+            <span class="credit-value">
+              ${formatNumber(service.credits)}
+            </span>
+
+            <span class="credit-label">
+              credits
+            </span>
+
+          </td>
+
+
+          <td class="action-cell">
+
+            <button
+              class="add-button"
+              data-service="${service.name}"
+            >
+              Add
+            </button>
+
+          </td>
+
+        `;
+
+
+        tableBody.appendChild(row);
+
+      });
+
+
+      emptyState.style.display =
+        visibleCount === 0
+          ? "block"
+          : "none";
+
+
+      updateButtons();
+    }
+
+
+    /*
+    ============================================================
+    BUTTON STATES
+    ============================================================
+    */
+
+    function updateButtons() {
+
+      document
+        .querySelectorAll(".add-button")
+        .forEach(button => {
+
+          const serviceName =
+            button.dataset.service;
+
+          const service =
+            services.find(
+              item =>
+                item.name === serviceName
+            );
+
+
+          const isSelected =
+            selectedServices.has(
+              serviceName
+            );
+
+
+          button.classList.remove(
+            "added",
+            "not-enough"
+          );
+
+
+          button.disabled = false;
+
+
+          if (isSelected) {
+
+            button.textContent =
+              "✓ Added";
+
+            button.classList.add(
+              "added"
+            );
+
+            return;
+          }
+
+
+          const remaining =
+            getRemainingCredits();
+
+
+          if (
+            service.credits >
+            remaining
+          ) {
+
+            button.textContent =
+              "Not enough";
+
+            button.classList.add(
+              "not-enough"
+            );
+
+            button.disabled = true;
+
+            return;
+          }
+
+
+          button.textContent =
+            "Add";
+        });
+
+
+      document
+        .querySelectorAll(".service-row")
+        .forEach(row => {
+
+          const name =
+            row.dataset.serviceName;
+
+          row.classList.toggle(
+            "selected",
+            selectedServices.has(name)
+          );
+
+        });
+    }
+
+
+    /*
+    ============================================================
+    ADD / REMOVE SERVICE
+    ============================================================
+    */
+
+    tableBody.addEventListener(
+      "click",
+      function(event) {
+
+        const button =
+          event.target.closest(
+            ".add-button"
+          );
+
+
+        if (!button) {
+          return;
+        }
+
+
+        const serviceName =
+          button.dataset.service;
+
+
+        const service =
+          services.find(
+            item =>
+              item.name === serviceName
+          );
+
+
+        if (!service) {
+          return;
+        }
+
+
+        /*
+        If already selected:
+        remove it.
+        */
+
+        if (
+          selectedServices.has(
+            serviceName
+          )
+        ) {
+
+          selectedServices.delete(
+            serviceName
+          );
+
+          showToast(
+            `${service.name} removed from your allocation.`,
+            "success"
+          );
+
+          updateSummary();
+
+          return;
+        }
+
+
+        /*
+        Check credit ceiling.
+        */
+
+        const remaining =
+          getRemainingCredits();
+
+
+        if (
+          service.credits >
+          remaining
+        ) {
+
+          showToast(
+            `You have ${formatNumber(remaining)} credits remaining. ${service.name} requires ${formatNumber(service.credits)} credits.`,
+            "warning"
+          );
+
+          return;
+        }
+
+
+        /*
+        Add service.
+        */
+
+        selectedServices.add(
+          serviceName
+        );
+
+
+        showToast(
+          `${service.name} added to your allocation.`,
+          "success"
+        );
+
+
+        updateSummary();
+    });
+
+
+    /*
+    ============================================================
+    SEARCH
+    ============================================================
+    */
+
+    searchInput.addEventListener(
+      "input",
+      function() {
+
+        renderServices(
+          searchInput.value
+        );
+
+      }
+    );
+
+
+    /*
+    ============================================================
+    TOAST
+    ============================================================
+    */
+
+    let toastTimer;
+
+
+    function showToast(
+      message,
+      type = ""
+    ) {
+
+      clearTimeout(
+        toastTimer
+      );
+
+
+      toast.textContent =
+        message;
+
+
+      toast.className =
+        "toast show";
+
+
+      if (type) {
+        toast.classList.add(
+          type
+        );
+      }
+
+
+      toastTimer =
+        setTimeout(
+          () => {
+
+            toast.classList.remove(
+              "show"
+            );
+
+          },
+          3200
+        );
+    }
+
+
+    /*
+    ============================================================
+    SUBMIT
+    ============================================================
+    */
+
+    submitButton.addEventListener(
+      "click",
+      function() {
+
+        const selected =
+          getSelectedCredits();
+
+
+        if (selected === 0) {
+
+          showToast(
+            "Please select at least one service before submitting.",
+            "warning"
+          );
+
+          return;
+        }
+
+
+        modalSelected.textContent =
+          `${formatNumber(selected)} credits`;
+
+
+        modalOverlay.classList.add(
+          "show"
+        );
+
+      }
+    );
+
+
+    modalClose.addEventListener(
+      "click",
+      function() {
+
+        modalOverlay.classList.remove(
+          "show"
+        );
+
+      }
+    );
+
+
+    modalOverlay.addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          event.target ===
+          modalOverlay
+        ) {
+
+          modalOverlay.classList.remove(
+            "show"
+          );
+
+        }
+
+      }
+    );
+
+
+    /*
+    ============================================================
+    INITIAL LOAD
+    ============================================================
+    */
+
+    renderServices();
+
+    updateSummary();
+
+  </script>
 
 </body>
 </html>
