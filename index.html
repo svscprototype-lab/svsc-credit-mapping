@@ -742,7 +742,7 @@
         </div>
 
         <div class="summary-value" id="totalCredits">
-          1,000
+          10,000
         </div>
 
         <div class="summary-subtext">
@@ -776,7 +776,7 @@
         </div>
 
         <div class="summary-value" id="remainingCredits">
-          1,000
+          10,000
         </div>
 
         <div class="summary-subtext">
@@ -962,7 +962,7 @@
 
         selected from your
         <strong>
-          1,000 credit
+          10,000 credit
         </strong>
         allocation.
 
@@ -1013,283 +1013,456 @@
     const TOTAL_CREDITS = 1000;
 
 
-    const services = [
+    const TOTAL_CREDITS = 10000;
 
-      // =========================
-      // DISCOVERY & VALIDATION
-      // =========================
+const services = [
 
-      {
-        name: "Discovery Workshop",
-        credits: 150,
-        description:
-          "A focused session to understand the founder's idea, context and direction.",
-        category: "Discovery & Validation"
-      },
+  // =========================
+  // PRODUCT & STRATEGY
+  // =========================
 
-      {
-        name: "Discovery Sprint",
-        credits: 250,
-        description:
-          "A focused engagement to turn a raw idea into a clearer plan.",
-        category: "Discovery & Validation"
-      },
+  {
+    name: "Discovery Workshop",
+    credits: 150,
+    description: "A focused session to understand the founder's idea, problem and direction.",
+    category: "Product & Strategy"
+  },
 
-      {
-        name: "Customer Problem Assessment",
-        credits: 125,
-        description:
-          "Checks whether the problem is real and worth solving.",
-        category: "Discovery & Validation"
-      },
+  {
+    name: "Business Idea Validation",
+    credits: 500,
+    description: "Checks whether the founder's idea is worth pursuing before investing in building it.",
+    category: "Product & Strategy"
+  },
 
-      {
-        name: "Business Idea Validation",
-        credits: 150,
-        description:
-          "Checks whether the business idea has a real opportunity to pursue.",
-        category: "Discovery & Validation"
-      },
-
-      {
-        name: "Market Validation",
-        credits: 175,
-        description:
-          "Checks whether enough people would want the proposed product or service.",
-        category: "Discovery & Validation"
-      },
-
-      {
-        name: "Customer Validation",
-        credits: 175,
-        description:
-          "Confirms whether real customers would pay for the proposed solution.",
-        category: "Discovery & Validation"
-      },
-
-      {
-        name: "Product Assumption Review",
-        credits: 100,
-        description:
-          "Tests assumptions that could make or break the product idea.",
-        category: "Discovery & Validation"
-      },
-
-      {
-        name: "Concept Testing",
-        credits: 125,
-        description:
-          "Tests the concept with real people and gathers their response.",
-        category: "Discovery & Validation"
-      },
-
-      {
-        name: "Solution Validation",
-        credits: 175,
-        description:
-          "Checks whether the proposed solution actually addresses the problem.",
-        category: "Discovery & Validation"
-      },
-
-      {
-        name: "Pain Point Mapping",
-        credits: 100,
-        description:
-          "Maps the frustrations and pain points customers currently experience.",
-        category: "Discovery & Validation"
-      },
-
-      {
-        name: "User Interview Execution",
-        credits: 100,
-        description:
-          "Talks to real users and captures structured customer feedback.",
-        category: "Discovery & Validation"
-      },
+  {
+    name: "Market Validation",
+    credits: 750,
+    description: "Assesses whether enough potential customers want the proposed product or solution.",
+    category: "Product & Strategy"
+  },
 
 
-      // =========================
-      // PRODUCT STRATEGY
-      // =========================
+  // =========================
+  // ENGINEERING & TECHNOLOGY
+  // =========================
 
-      {
-        name: "Persona Development",
-        credits: 100,
-        description:
-          "Defines the key customer types the product needs to serve.",
-        category: "Product Strategy"
-      },
+  {
+    name: "Technical Feasibility Assessment",
+    credits: 500,
+    description: "Evaluates whether the proposed product or solution can realistically be built.",
+    category: "Engineering & Technology"
+  },
 
-      {
-        name: "Customer Journey Mapping",
-        credits: 125,
-        description:
-          "Maps the major steps a customer takes through the product experience.",
-        category: "Product Strategy"
-      },
+  {
+    name: "Technical Architecture Design",
+    credits: 1000,
+    description: "Plans the overall technical structure and how the product's major components fit together.",
+    category: "Engineering & Technology"
+  },
 
-      {
-        name: "Product Vision Workshop",
-        credits: 175,
-        description:
-          "Defines the product direction and what the product should become.",
-        category: "Product Strategy"
-      },
-
-      {
-        name: "Vision Statement Definition",
-        credits: 75,
-        description:
-          "Creates a clear statement describing what the business wants to achieve.",
-        category: "Product Strategy"
-      },
-
-      {
-        name: "Ambition Statement Definition",
-        credits: 75,
-        description:
-          "Defines a clear statement describing where the business wants to go.",
-        category: "Product Strategy"
-      },
+  {
+    name: "API Architecture",
+    credits: 750,
+    description: "Plans how the product will communicate and exchange information with other systems.",
+    category: "Engineering & Technology"
+  },
 
 
-      // =========================
-      // ENGINEERING & TECHNOLOGY
-      // =========================
+  // =========================
+  // MARKETING & GROWTH
+  // =========================
 
-      {
-        name: "Technical Feasibility Assessment",
-        credits: 150,
-        description:
-          "Checks whether an idea can actually be built with the required technology.",
-        category: "Engineering & Technology"
-      },
+  {
+    name: "Brand Strategy Development",
+    credits: 500,
+    description: "Defines the direction, positioning and overall identity of the brand.",
+    category: "Marketing & Growth"
+  },
 
-      {
-        name: "Technical Architecture Design",
-        credits: 300,
-        description:
-          "Plans the overall technical structure of the product.",
-        category: "Engineering & Technology"
-      },
+  {
+    name: "Content Strategy Development",
+    credits: 500,
+    description: "Establishes what content to create, why it matters and how it supports business goals.",
+    category: "Marketing & Growth"
+  },
 
-      {
-        name: "Solution Architecture",
-        credits: 250,
-        description:
-          "Designs how the technical pieces fit together.",
-        category: "Engineering & Technology"
-      },
-
-      {
-        name: "API Development",
-        credits: 250,
-        description:
-          "Builds the connections between systems.",
-        category: "Engineering & Technology"
-      },
-
-      {
-        name: "Backend Development",
-        credits: 300,
-        description:
-          "Builds the server-side systems that power the product.",
-        category: "Engineering & Technology"
-      },
-
-      {
-        name: "Frontend Development",
-        credits: 300,
-        description:
-          "Builds the product interface users interact with.",
-        category: "Engineering & Technology"
-      },
-
-      {
-        name: "MVP Development",
-        credits: 400,
-        description:
-          "Builds the first working version of the product.",
-        category: "Engineering & Technology"
-      },
+  {
+    name: "Content Calendar Creation",
+    credits: 150,
+    description: "Organises planned content into a publishing schedule.",
+    category: "Marketing & Growth"
+  },
 
 
-      // =========================
-      // MARKETING & GROWTH
-      // =========================
+  // =========================
+  // LEGAL & COMPLIANCE
+  // =========================
 
-      {
-        name: "Brand Strategy Development",
-        credits: 175,
-        description:
-          "Plans how the brand should look, sound and feel.",
-        category: "Marketing & Growth"
-      },
+  {
+    name: "Company Registration Support",
+    credits: 500,
+    description: "Supports the official process of legally registering a new company.",
+    category: "Legal & Compliance"
+  },
 
-      {
-        name: "Brand Identity Development",
-        credits: 150,
-        description:
-          "Develops the visual identity and expression of the brand.",
-        category: "Marketing & Growth"
-      },
-
-      {
-        name: "Content Strategy Development",
-        credits: 150,
-        description:
-          "Plans what content should be created, why and when.",
-        category: "Marketing & Growth"
-      },
-
-      {
-        name: "SEO Audit",
-        credits: 100,
-        description:
-          "Checks how well a website performs in search results.",
-        category: "Marketing & Growth"
-      },
+  {
+    name: "Shareholder Agreement Drafting",
+    credits: 750,
+    description: "Prepares an agreement covering co-founder ownership, responsibilities and decision-making.",
+    category: "Legal & Compliance"
+  },
 
 
-      // =========================
-      // LEGAL & COMPLIANCE
-      // =========================
+  // =========================
+  // FINANCE & ACCOUNTING
+  // =========================
 
-      {
-        name: "Contract Drafting",
-        credits: 150,
-        description:
-          "Creates or drafts a contract for a business relationship.",
-        category: "Legal & Compliance"
-      },
+  {
+    name: "Financial Model Development",
+    credits: 1000,
+    description: "Builds a financial model projecting the business's future revenue, costs and financial position.",
+    category: "Finance & Accounting"
+  },
 
-
-      // =========================
-      // FINANCE & ACCOUNTING
-      // =========================
-
-      {
-        name: "Financial Model Development",
-        credits: 250,
-        description:
-          "Builds a financial model to understand the business's future finances.",
-        category: "Finance & Accounting"
-      },
+  {
+    name: "Unit Economics Analysis",
+    credits: 750,
+    description: "Analyses the costs and revenue associated with serving an individual customer.",
+    category: "Finance & Accounting"
+  },
 
 
-      // =========================
-      // HUMAN RESOURCES & TALENT
-      // =========================
+  // =========================
+  // OPERATIONS
+  // =========================
 
-      {
-        name: "Candidate Screening",
-        credits: 100,
-        description:
-          "Reviews candidates against the requirements for a role.",
-        category: "Human Resources & Talent"
-      }
+  {
+    name: "SOP Creation",
+    credits: 250,
+    description: "Documents the steps required to carry out a specific business task consistently.",
+    category: "Operations"
+  },
 
-    ];
+  {
+    name: "Workflow Redesign",
+    credits: 750,
+    description: "Redesigns an existing process to reduce unnecessary steps and improve efficiency.",
+    category: "Operations"
+  },
+
+
+  // =========================
+  // CUSTOMER SUCCESS & SUPPORT
+  // =========================
+
+  {
+    name: "Success Plan Creation",
+    credits: 500,
+    description: "Creates a documented plan covering customer goals, milestones and responsibilities.",
+    category: "Customer Success & Support"
+  },
+
+  {
+    name: "Go-Live Planning",
+    credits: 750,
+    description: "Develops a launch plan with timelines, responsibilities and readiness activities.",
+    category: "Customer Success & Support"
+  },
+
+
+  // =========================
+  // HUMAN RESOURCES & TALENT
+  // =========================
+
+  {
+    name: "Workforce Needs Assessment",
+    credits: 500,
+    description: "Assesses the team's current capacity and identifies staffing or capability gaps.",
+    category: "Human Resources & Talent"
+  },
+
+  {
+    name: "Talent Pipeline Development",
+    credits: 500,
+    description: "Builds a pipeline of potential candidates across relevant skill areas.",
+    category: "Human Resources & Talent"
+  },
+
+
+  // =========================
+  // BRANDING & CREATIVE
+  // =========================
+
+  {
+    name: "Value Proposition Development",
+    credits: 250,
+    description: "Clarifies the value the business offers and why customers should choose it.",
+    category: "Branding & Creative"
+  },
+
+  {
+    name: "Visual Identity System",
+    credits: 750,
+    description: "Develops the core visual elements and rules needed for a consistent brand identity.",
+    category: "Branding & Creative"
+  },
+
+
+  // =========================
+  // DATA ANALYTICS & BUSINESS INTELLIGENCE
+  // =========================
+
+  {
+    name: "KPI Framework Development",
+    credits: 750,
+    description: "Defines the key performance indicators used to measure business and operational performance.",
+    category: "Data Analytics & Business Intel"
+  },
+
+  {
+    name: "Analytics Roadmap",
+    credits: 750,
+    description: "Prioritises analytics initiatives, reporting improvements and data capabilities over time.",
+    category: "Data Analytics & Business Intel"
+  },
+
+
+  // =========================
+  // AI & AUTOMATION
+  // =========================
+
+  {
+    name: "AI Strategy Development",
+    credits: 750,
+    description: "Identifies how AI can support business goals, customer experiences and internal operations.",
+    category: "AI & Automation"
+  },
+
+  {
+    name: "Automation Opportunity Identification",
+    credits: 250,
+    description: "Identifies repetitive or rule-based tasks that may be suitable for automation.",
+    category: "AI & Automation"
+  },
+
+  {
+    name: "AI Solution Concept",
+    credits: 750,
+    description: "Defines a proposed AI solution, its intended capabilities and the outcome it should deliver.",
+    category: "AI & Automation"
+  },
+
+
+  // =========================
+  // RESEARCH & INSIGHT
+  // =========================
+
+  {
+    name: "Research brief",
+    credits: 250,
+    description: "Defines the purpose, scope and key information needed for a research activity.",
+    category: "Research & Insight"
+  },
+
+  {
+    name: "Customer interview plan",
+    credits: 500,
+    description: "Plans customer discovery interviews, including objectives, activities and timing.",
+    category: "Research & Insight"
+  },
+
+
+  // =========================
+  // PROJECT & PROGRAM MANAGEMENT
+  // =========================
+
+  {
+    name: "Project charter",
+    credits: 500,
+    description: "Documents a project's purpose, objectives, scope and key expectations.",
+    category: "Project & Program Management"
+  },
+
+  {
+    name: "Work breakdown structure",
+    credits: 500,
+    description: "Breaks project work into manageable tasks and deliverables for planning and execution.",
+    category: "Project & Program Management"
+  },
+
+
+  // =========================
+  // PROCUREMENT & VENDOR MANAGEMENT
+  // =========================
+
+  {
+    name: "Needs assessment",
+    credits: 750,
+    description: "Assesses business needs to establish what must be sourced or procured.",
+    category: "Procurement & Vendor Management"
+  },
+
+  {
+    name: "Sourcing strategy",
+    credits: 1000,
+    description: "Develops an approach for sourcing suitable suppliers against business requirements.",
+    category: "Procurement & Vendor Management"
+  },
+
+
+  // =========================
+  // QUALITY ASSURANCE & TESTING
+  // =========================
+
+  {
+    name: "Test strategy",
+    credits: 1000,
+    description: "Defines the overall approach, scope and methods for testing a product or system.",
+    category: "Quality Assurance & Testing"
+  },
+
+  {
+    name: "Requirements test mapping",
+    credits: 500,
+    description: "Maps requirements to tests to help confirm that expected functionality is covered.",
+    category: "Quality Assurance & Testing"
+  },
+
+
+  // =========================
+  // SECURITY & RISK MANAGEMENT
+  // =========================
+
+  {
+    name: "Governance framework",
+    credits: 1000,
+    description: "Establishes a structured approach to security governance, responsibilities and oversight.",
+    category: "Security & Risk Management"
+  },
+
+  {
+    name: "User access review",
+    credits: 250,
+    description: "Reviews user access and permissions to identify potential issues.",
+    category: "Security & Risk Management"
+  },
+
+
+  // =========================
+  // CONTENT CREATION
+  // =========================
+
+  {
+    name: "Content strategy brief",
+    credits: 750,
+    description: "Sets out the goals, approach and key activities for a content strategy.",
+    category: "Content Creation"
+  },
+
+  {
+    name: "Editorial calendar",
+    credits: 150,
+    description: "Organises content topics and publication dates into an editorial schedule.",
+    category: "Content Creation"
+  },
+
+
+  // =========================
+  // SALES AND BUSINESS DEVELOPMENT
+  // =========================
+
+  {
+    name: "Ideal customer profile",
+    credits: 500,
+    description: "Defines the characteristics of the customers most suited to the business's offering.",
+    category: "Sales and Business Development"
+  },
+
+  {
+    name: "Lead generation plan",
+    credits: 500,
+    description: "Plans activities and channels for attracting potential customers.",
+    category: "Sales and Business Development"
+  },
+
+
+  // =========================
+  // SALES OPERATIONS
+  // =========================
+
+  {
+    name: "Pipeline configuration plan",
+    credits: 500,
+    description: "Plans how sales pipeline stages and related CRM processes should be configured.",
+    category: "Sales Operations"
+  },
+
+  {
+    name: "Lead handover process",
+    credits: 500,
+    description: "Defines how leads are transferred between teams or stages of the sales process.",
+    category: "Sales Operations"
+  },
+
+
+  // =========================
+  // PARTNERSHIPS AND ECOSYSTEM
+  // =========================
+
+  {
+    name: "Partnership value proposition",
+    credits: 500,
+    description: "Clarifies the value the business offers potential partners and the value of working together.",
+    category: "Partnerships and Ecosystem"
+  },
+
+  {
+    name: "Potential partner list",
+    credits: 150,
+    description: "Identifies and documents potential partners relevant to the business.",
+    category: "Partnerships and Ecosystem"
+  },
+
+
+  // =========================
+  // BUSINESS MODEL AND REVENUE
+  // =========================
+
+  {
+    name: "Business model canvas",
+    credits: 1000,
+    description: "Maps the main elements of the business model, including customers, value, operations and revenue.",
+    category: "Business Model and Revenue"
+  },
+
+  {
+    name: "Revenue stream map",
+    credits: 500,
+    description: "Identifies and organises the business's revenue streams.",
+    category: "Business Model and Revenue"
+  },
+
+
+  // =========================
+  // PRODUCT OPERATIONS
+  // =========================
+
+  {
+    name: "Roadmap update process",
+    credits: 500,
+    description: "Defines a repeatable process for updating and maintaining the product roadmap.",
+    category: "Product Operations"
+  },
+
+  {
+    name: "Product intake form",
+    credits: 250,
+    description: "Creates a structured way to capture and organise incoming product requests.",
+    category: "Product Operations"
+  }
+
+];
 
 
     /*
